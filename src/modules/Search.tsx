@@ -3,6 +3,8 @@ import React, { ReactElement } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
+import InputAdornment from '@material-ui/core/InputAdornment'
+import CircularProgress from '@material-ui/core/CircularProgress'
 
 import Table from '../components/Table'
 import queryAdLibrary from '../utils/queryAdLibrary'
@@ -30,7 +32,8 @@ interface Props {
 
 const Search = (props: Props): ReactElement => {
   const [query, setQuery] = React.useState('')
-  const [data, setData]=React.useState([])
+  const [data, setData] = React.useState([])
+  const [loading, setLoading] = React.useState(false)
   const debouncedQuery = useDebounce(query, 1000)
 
   const classes = useStyles()
@@ -42,9 +45,11 @@ const Search = (props: Props): ReactElement => {
   React.useEffect(()=>{
     async function fetchData() {
       if (query != '' && query.length >= 3) {
+        setLoading(true)
         const res = await queryAdLibrary(query)
 
         setData(res)
+        setLoading(false)
       } else {
         setData([])
       }
@@ -61,6 +66,9 @@ const Search = (props: Props): ReactElement => {
         onChange={handleChangeQuery}
         variant="outlined"
         className={classes.search}
+        InputProps={loading && {
+          endAdornment: <InputAdornment position="end"><CircularProgress/></InputAdornment>
+        }}
       />
       {
         data.length > 0 && (
