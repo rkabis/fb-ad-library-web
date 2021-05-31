@@ -2,10 +2,12 @@ import React, { ReactElement } from 'react'
 
 import { makeStyles } from '@material-ui/core/styles'
 import TextField from '@material-ui/core/TextField'
+import Button from '@material-ui/core/Button'
 
 import Table from '../components/Table'
 import queryAdLibrary from '../utils/queryAdLibrary'
 import useDebounce from '../utils/useDebounce'
+import saveToCsv from '../utils/saveToCsv'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -60,6 +62,13 @@ const Search = (props: Props): ReactElement => {
         variant="outlined"
         className={classes.search}
       />
+      {
+        data.length > 0 && (
+          <Button onClick={() => saveToCsv(data)}>
+            {'Download'}
+          </Button>
+        )
+      }
       {
         data.length > 0 && <Table data={data} />
       }
