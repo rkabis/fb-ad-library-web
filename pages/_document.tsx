@@ -28,16 +28,12 @@ class MyDocument extends Document {
             content={theme.palette.primary.main}
           />
           <meta
-            property={'og:image'}
-            content={'/generic-banner.png'}
-          />
-          <meta
             property="og:title"
-            content="Database Corps"
+            content="FB Ad Library"
           />
           <meta
             property="og:description"
-            content="Database of corporations"
+            content="Search Ad Library API"
           />
           <link
             rel={'icon'}
